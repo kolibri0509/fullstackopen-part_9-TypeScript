@@ -1,5 +1,21 @@
-const calculateBmi = (a:number, b:number): string => {
-    const bmi : number = b / (a/100)**2;
+interface BmiValues{
+    value1:number,
+    value2:number
+}
+const parseArguments=(args:string[]):BmiValues => {
+    if(args.length<4) throw new Error('Not enough arguments');
+    if(args.length>4) throw new Error('Too many arguments');
+    if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
+        return {
+          value1: Number(args[2]),
+          value2: Number(args[3])
+        }
+      } else {
+        throw new Error('Provided values were not numbers!');
+      }
+}
+const calculateBmi = (c:number, d:number): string => {
+    const bmi : number = d / (c/100)**2;
     if(bmi<16){
         return 'Underweight (Severe thinness)'
     }else if(bmi>=16 && bmi<17){
@@ -15,7 +31,20 @@ const calculateBmi = (a:number, b:number): string => {
     }else if(bmi>=35 && bmi<40){
         return 'Obese (Class II)'
     }else{
+        if(bmi>40)
         return 'Obese (Class III)'
     }
 }
-console.log(calculateBmi(180, 74))
+try {
+    const { value1, value2 } = parseArguments(process.argv);
+    calculateBmi(value1, value2);
+  } catch (error: unknown) {
+    let errorMessage = 'Something bad happened.'
+    if (error instanceof Error) {
+      errorMessage += ' Error: ' + error.message;
+    }
+    console.log(errorMessage);
+  }
+const c :number= Number(process.argv[2]);
+const d :number=Number(process.argv[3]);
+console.log(calculateBmi(c,d));

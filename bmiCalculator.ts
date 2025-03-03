@@ -30,10 +30,8 @@ const calculateBmi = (c:number, d:number): string => {
         return 'Obese (Class I)'
     }else if(bmi>=35 && bmi<40){
         return 'Obese (Class II)'
-    }else{
-        if(bmi>40)
-        return 'Obese (Class III)'
     }
+    return 'Obese (Class III)'
 }
 try {
     const { value1, value2 } = parseArguments(process.argv);
